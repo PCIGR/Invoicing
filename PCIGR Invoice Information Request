@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PCIGR Invoicing Request</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 80px;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.85em;
+      margin-top: 2px;
+      display: none;
+    }
+    .success-message {
+      display: none;
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background: #007BFF;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h2>PCIGR Invoicing Request</h2>
+  <form id="InvoiceForm" action="https://submit-form.com/ToLHLmP9R" method="POST" novalidate>
+    
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" required>
+    <div class="error-message" id="nameError"></div>
+    
+    <label for="company">Company Name</label>
+    <input type="text" id="company" name="company">
+
+    <label for="address">Mailing Address *</label>
+    <textarea id="address" name="address" required></textarea>
+    <div class="error-message" id="addressError"></div>
+    
+    <label for="email">Email Address *</label>
+    <input type="email" id="email" name="email" required>
+    <div class="error-message" id="emailError"></div>
+
+    <label for="service">Description of Service *</label>
+    <textarea id="service" name="service" required></textarea>
+    <div class="error-message" id="serviceError"></div>
+
+    <label for="total">Total (CAD) *</label>
+    <input type="number" id="total" name="total" step="0.01" min="0.01" required placeholder="0.00">
+    <div class="error-message" id="totalError"></div>
+
+    <label for="credit">Crediting Worktag *</label>
+    <input type="text" id="credit" name="credit" required>
+    <div class="error-message" id="creditError"></div>
+
+    <label for="debit">Debiting Worktag (if known)</label>
+    <input type="text" id="debit" name="debit">
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div class="success-message" id="successMessage">
+    ✅ Form submitted successfully! Thank you.
+  </div>
+
+  <script>
+    const form = document.getElementById('serviceForm');
+    const successMessage = document.getElementById('successMessage');
+
+    const fields = [
+      { id: "name", errorId: "nameError", message: "Please enter your name." },
+      { id: "address", errorId: "addressError", message: "Please provide your mailing address." },
+      { id: "email", errorId: "emailError", message: "Please enter a valid email address." },
+      { id: "service", errorId: "serviceError", message: "Please describe the service." },
+      { id: "total", errorId: "totalError", message: "Total must be greater than zero." },
+      { id: "credit", errorId: "creditError", message: "Please provide a crediting worktag." }
+    ];
+
+    function validateField(field) {
+      const input = document.getElementById(field.id);
+      const error = document.getElementById(field.errorId);
+      let valid = true;
+
+      if (input.type === "email") {
+        if (!input.value.trim()) {
+          error.textContent = "Please enter your email address.";
+          error.style.display = "block";
+          valid = false;
+        } else if (!input.validity.valid) {
+          error.textContent = field.message;
+          error.style.display = "block";
+          valid = false;
+        } else {
+          error.style.display = "none";
+        }
+      } else if (input.type === "number") {
+        if (!input.value || parseFloat(input.value) <= 0) {
+          error.textContent = field.message;
+          error.style.display = "block";
+          valid = false;
+        } else {
+          error.style.display = "none";
+        }
+      } else {
+        if (!input.value.trim()) {
+          error.textContent = field.message;
+          error.style.display = "block";
+          valid = false;
+        } else {
+          error.style.display = "none";
+        }
+      }
+      return valid;
+    }
+
+    // Live validation listeners
+    fields.forEach(field => {
+      const input = document.getElementById(field.id);
+      input.addEventListener('input', () => validateField(field));
+    });
+
+    // On submit
+    form.addEventListener('submit', function(event) {
+      let formValid = true;
+      fields.forEach(field => {
+        if (!validateField(field)) formValid = false;
+      });
+      if (!formValid) {
+        event.preventDefault(); // Prevent submit if form invalid
+      } else {
+        // Allow form to submit normally
+        successMessage.style.display = "block"; // Optionally show success message
+      }
+    });
+  </script>
+</body>
+</html>
