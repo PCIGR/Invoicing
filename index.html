@@ -90,6 +90,10 @@
     <input type="number" id="total" name="total" step="0.01" min="0.01" required placeholder="0.00">
     <div class="error-message" id="totalError"></div>
 
+    <label for="total-usd">Total (USD) *</label>
+    <input type="number" id="total-usd" name="total-usd" step="0.01" min="0.01" required placeholder="0.00">
+    <div class="error-message" id="total-usdError"></div>
+    
     <label for="credit">Crediting Worktag *</label>
     <input type="text" id="credit" name="credit" required>
     <div class="error-message" id="creditError"></div>
@@ -114,6 +118,7 @@
       { id: "email", errorId: "emailError", message: "Please enter a valid email address." },
       { id: "service", errorId: "serviceError", message: "Please describe the service." },
       { id: "total", errorId: "totalError", message: "Total must be greater than zero." },
+      { id: "total-usd", errorId: "total-usdError", message: "Total must be greater than zero." },
       { id: "credit", errorId: "creditError", message: "Please provide a crediting worktag." }
     ];
 
